@@ -38,4 +38,25 @@ public class EmployeeService {
     public Employee addEmployee(Employee employee) {
         return employeeRepository.save(employee);
     }
+
+    public Employee update(Employee employee) {
+        Employee existEmployee = employeeRepository.findById(employee.getId()).orElse(null);
+        if (existEmployee == null) {
+            return null;
+        } else {
+            if (employee.getName() != null) {
+                existEmployee.setName(employee.getName());
+            }
+            if (employee.getGender() != null) {
+                existEmployee.setGender(employee.getGender());
+            }
+            if (employee.getAge() != 0) {
+                existEmployee.setAge(employee.getAge());
+            }
+            if (employee.getSalary() != 0) {
+                existEmployee.setSalary(employee.getSalary());
+            }
+        }
+        return employeeRepository.save(employee);
+    }
 }

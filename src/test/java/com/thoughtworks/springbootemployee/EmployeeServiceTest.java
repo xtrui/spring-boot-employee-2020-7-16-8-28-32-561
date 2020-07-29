@@ -84,4 +84,15 @@ public class EmployeeServiceTest {
         // then
         assertEquals(employee, createdEmployee);
     }
+
+    @Test
+    void should_return_employee_when_update_given_employee() {
+        // given
+        given(mockEmployeeRepository.findById(any())).willReturn(Optional.of(employee));
+        given(mockEmployeeRepository.save(employee)).willReturn(employee);
+        // when
+        Employee updatedEmployee = employeeService.update(employee);
+        // then
+        assertEquals(employee, updatedEmployee);
+    }
 }
