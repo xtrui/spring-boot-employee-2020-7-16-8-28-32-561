@@ -59,4 +59,8 @@ public class EmployeeService {
         }
         return employeeRepository.save(employee);
     }
+
+    public void deleteByID(int ID) {
+        employeeRepository.deleteById(ID);
+    }
 }

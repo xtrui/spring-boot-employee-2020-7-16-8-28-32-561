@@ -95,4 +95,15 @@ public class EmployeeServiceTest {
         // then
         assertEquals(employee, updatedEmployee);
     }
+
+    //todo
+    @Test
+    void should_return__when_delete_by_ID_given_ID() {
+        // given
+
+        // when
+        employeeService.deleteByID(1);
+        // then
+
+    }
 }
