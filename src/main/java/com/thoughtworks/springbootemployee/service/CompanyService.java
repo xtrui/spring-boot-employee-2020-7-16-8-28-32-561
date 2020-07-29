@@ -53,9 +53,8 @@ public class CompanyService {
         return companyRepository.save(company);
     }
 
-    public Page<Company> findByPage(PageRequest pageRequest) {
-
-        return companyRepository.findAll(pageRequest);
+    public Page<Company> findByPage(int page, int pageSize) {
+        return companyRepository.findAll(PageRequest.of(page, pageSize));
     }
 
     public void deleteByID(int ID) {

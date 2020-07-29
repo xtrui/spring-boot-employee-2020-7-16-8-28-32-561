@@ -28,8 +28,8 @@ public class CompanyServiceTest {
 
     @BeforeEach
     void setUp() {
-        employees.add(new Employee(1, "alibaba1", 20, "male", 6000.0));
-        employees.add(new Employee(2, "alibaba2", 19, "male", 8000.0));
+        employees.add(new Employee(1, "alibaba1", 20, "man", 6000.0));
+        employees.add(new Employee(2, "alibaba2", 19, "man", 8000.0));
         mockedCompanies.add(new Company(1, 2, employees, "alibaba"));
     }
 
@@ -49,7 +49,7 @@ public class CompanyServiceTest {
         PageImpl<Company> companyPage = new PageImpl<>(mockedCompanies);
         given(mockedCompanyRepository.findAll(PageRequest.of(1, 2))).willReturn(companyPage);
         // when
-        Page<Company> page = companyService.findByPage(PageRequest.of(1, 2));
+        Page<Company> page = companyService.findByPage(1, 2);
         // then
         assertEquals(1, page.getSize());
     }
