@@ -34,15 +34,19 @@ public class CompanyService {
     }
 
     public Company updateCompany(Company company) {
-        Company company1 = companyRepository.findById(company.getId()).get();
-        if (company.getCompanyName() != null) {
-            company1.setCompanyName(company.getCompanyName());
-        }
-        if (company.getEmployees() != null) {
-            company1.setEmployees(company.getEmployees());
-        }
-        if (company.getEmployeesNums() != 0) {
-            company1.setEmployeesNums(company.getEmployeesNums());
+        Company existedCompany = companyRepository.findById(company.getId()).orElse(null);
+        if (existedCompany == null) {
+            return null;
+        } else {
+            if (company.getCompanyName() != null) {
+                existedCompany.setCompanyName(company.getCompanyName());
+            }
+            if (company.getEmployees() != null) {
+                existedCompany.setEmployees(company.getEmployees());
+            }
+            if (company.getEmployeesNums() != 0) {
+                existedCompany.setEmployeesNums(company.getEmployeesNums());
+            }
         }
         return companyRepository.save(company);
     }

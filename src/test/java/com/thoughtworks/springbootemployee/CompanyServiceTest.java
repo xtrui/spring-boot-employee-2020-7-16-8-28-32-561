@@ -9,8 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -41,7 +43,7 @@ public class CompanyServiceTest {
     @Test
     void should_return_right_company_when_get_company_given_company_id() {
         //given
-        given(mockedCompanyRepository.findById(1).get()).willReturn(mockedCompanies.get(0));
+        given(mockedCompanyRepository.findById(any())).willReturn(Optional.of(mockedCompanies.get(0)));
         //when
         Company company = companyService.getCompany(1);
         //then
@@ -51,7 +53,7 @@ public class CompanyServiceTest {
     @Test
     void should_return_employees_when_get_employees_given_company_id() {
         //given
-        given(mockedCompanyRepository.findById(any()).get().getEmployees()).willReturn(mockedCompanies.get(0).getEmployees());
+        given(mockedCompanyRepository.findById(any())).willReturn(Optional.of(mockedCompanies.get(0)));
         //when
         List<Employee> employees = companyService.getEmployees(1);
         //then
@@ -67,27 +69,30 @@ public class CompanyServiceTest {
         //then
         assertEquals(mockedCompanies.get(0), company);
     }
-//
-//    @Test
-////    void should_return_updated_company_when_update_company_given_company() {
-////        //given
-////        given(mockedCompanyRepository.getCompany(any())).willReturn(mockedCompanies.get(0));
-////
-////        given(mockedCompanyRepository.update(any())).willReturn(mockedCompanies.get(0));
-////        //when
-////        Company company = companyService.updateCompany(mockedCompanies.get(0));
-////        //then
-////        assertEquals(mockedCompanies.get(0), company);
-////    }
+
+    @Test
+    void should_return_updated_company_when_update_company_given_company() {
+        //given
+        given(mockedCompanyRepository.findById(any())).willReturn(Optional.of(mockedCompanies.get(0)));
+
+        given(mockedCompanyRepository.save(any())).willReturn(mockedCompanies.get(0));
+        //when
+        Company company = companyService.updateCompany(mockedCompanies.get(0));
+        //then
+        assertEquals(mockedCompanies.get(0), company);
+    }
 
     @Test
     void should_return_null_update_company_given_company_not() {
         //given
-        System.out.println(mockedCompanies.get(0));
-        companyService.addCompany(mockedCompanies.get(0));
-        System.out.println(companyService.getCompanies());
-        //when
+        given(mockedCompanyRepository.findById(any())).willReturn(Optional.empty());
 
+//        given(mockedCompanyRepository.save(any())).willReturn(mockedCompanies.get(0));
+        //when
+        Company company = companyService.updateCompany(mockedCompanies.get(0));
         //then
+        assertNull(company);
     }
+
+
 }
