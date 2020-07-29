@@ -6,6 +6,9 @@ import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +41,17 @@ public class CompanyServiceTest {
         List<Company> companies = companyService.getCompanies();
         //then
         assertEquals(mockedCompanies.size(), companies.size());
+    }
+
+    @Test
+    void should_return_companies_of_page_when_find_by_page_given_page_and_page_size() {
+        // given
+        PageImpl<Company> companyPage = new PageImpl<>(mockedCompanies);
+        given(mockedCompanyRepository.findAll(PageRequest.of(1, 2))).willReturn(companyPage);
+        // when
+        Page<Company> page = companyService.findByPage(PageRequest.of(1, 2));
+        // then
+        assertEquals(1, page.getSize());
     }
 
     @Test
@@ -86,13 +100,19 @@ public class CompanyServiceTest {
     void should_return_null_update_company_given_company_not() {
         //given
         given(mockedCompanyRepository.findById(any())).willReturn(Optional.empty());
-
-//        given(mockedCompanyRepository.save(any())).willReturn(mockedCompanies.get(0));
         //when
         Company company = companyService.updateCompany(mockedCompanies.get(0));
         //then
         assertNull(company);
     }
 
+    @Test
+    void should__when__given_() {
+        // given
 
+        // when
+
+        // then
+
+    }
 }

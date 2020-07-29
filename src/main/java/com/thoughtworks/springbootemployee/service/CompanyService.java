@@ -3,6 +3,8 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,5 +51,10 @@ public class CompanyService {
             }
         }
         return companyRepository.save(company);
+    }
+
+    public Page<Company> findByPage(PageRequest pageRequest) {
+
+        return companyRepository.findAll(pageRequest);
     }
 }
