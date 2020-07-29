@@ -74,4 +74,14 @@ public class EmployeeServiceTest {
         // then
         assertEquals(employee2, employee);
     }
+
+    @Test
+    void should_return_employee_when_add_employee_given_employee() {
+        // given
+        given(mockEmployeeRepository.save(employee)).willReturn(employee);
+        // when
+        Employee createdEmployee = employeeService.addEmployee(employee);
+        // then
+        assertEquals(employee, createdEmployee);
+    }
 }
