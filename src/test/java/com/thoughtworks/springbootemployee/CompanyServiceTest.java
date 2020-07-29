@@ -107,11 +107,11 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should__when__given_() {
+    void should_return__when_delete_by_ID_given_ID() {
         // given
 
         // when
-
+        companyService.deleteByID(1);
         // then
 
     }

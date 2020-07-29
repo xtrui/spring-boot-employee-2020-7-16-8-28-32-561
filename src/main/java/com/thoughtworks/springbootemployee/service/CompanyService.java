@@ -57,4 +57,8 @@ public class CompanyService {
 
         return companyRepository.findAll(pageRequest);
     }
+
+    public void deleteByID(int ID) {
+        companyRepository.deleteById(ID);
+    }
 }
