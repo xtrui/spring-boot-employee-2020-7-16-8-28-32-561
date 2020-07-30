@@ -107,7 +107,6 @@ public class CompanyServiceTest {
         //then
         assertNull(company);
     }
-    //todo
     @Test
     void should_return__when_delete_by_ID_given_ID() {
         // given

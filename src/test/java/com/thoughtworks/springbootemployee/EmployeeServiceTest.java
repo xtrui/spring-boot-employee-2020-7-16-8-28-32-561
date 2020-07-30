@@ -53,13 +53,11 @@ public class EmployeeServiceTest {
         assertEquals(this.employees, employees);
     }
 
-    //todo 测试匹配
     @Test
     void should_employee_of_male_when_get_employees_by_gender_given_male() {
         // given
-        Employee employee = new Employee();
-        employee.setGender("male");
-        given(mockEmployeeRepository.findAll()).willReturn(employees);
+        String gender = "male";
+        given(mockEmployeeRepository.findByGender(any())).willReturn(employees);
         // when
 
         List<Employee> employeeList = employeeService.getEmployees("male");
@@ -98,7 +96,6 @@ public class EmployeeServiceTest {
         assertEquals(employee, updatedEmployee);
     }
 
-    //todo
     @Test
     void should_return__when_delete_by_ID_given_ID() {
         // given
