@@ -19,6 +19,8 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 public class CompanyServiceTest {
     List<Company> mockedCompanies = new ArrayList<>();
@@ -113,6 +115,6 @@ public class CompanyServiceTest {
         // when
         companyService.deleteByID(1);
         // then
-
+        verify(mockedCompanyRepository, times(1)).deleteById(1);
     }
 }
