@@ -16,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 public class EmployeeServiceTest {
     Employee employee = new Employee(1, "alibaba1", 20, "male", 6000.0);
@@ -104,6 +106,6 @@ public class EmployeeServiceTest {
         // when
         employeeService.deleteByID(1);
         // then
-
+        verify(mockEmployeeRepository, times(1)).deleteById(1);
     }
 }
