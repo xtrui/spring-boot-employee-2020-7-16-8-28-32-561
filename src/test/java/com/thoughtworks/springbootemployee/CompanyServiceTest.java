@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee;
 
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
+import com.thoughtworks.springbootemployee.exception.NotExistException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -67,6 +67,16 @@ public class CompanyServiceTest {
     }
 
     @Test
+    void should_throw_not_exist_exception_when_get_company_given_company_id() {
+        //given
+        given(mockedCompanyRepository.findById(any())).willReturn(Optional.empty());
+        //when
+        //then
+        NotExistException notExistException = assertThrows(NotExistException.class, () -> companyService.getCompany(1));
+        assertEquals("this company doesn't exist", notExistException.getMessage());
+    }
+
+    @Test
     void should_return_employees_when_get_employees_given_company_id() {
         //given
         given(mockedCompanyRepository.findById(any())).willReturn(Optional.of(mockedCompanies.get(0)));
@@ -107,6 +117,7 @@ public class CompanyServiceTest {
         //then
         assertNull(company);
     }
+
     @Test
     void should_return__when_delete_by_ID_given_ID() {
         // given

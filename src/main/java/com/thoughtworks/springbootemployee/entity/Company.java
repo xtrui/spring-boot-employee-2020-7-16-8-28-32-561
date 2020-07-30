@@ -9,7 +9,7 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int employeesNums;
-    @Transient
+    @OneToMany(mappedBy = "companyID")
     private List<Employee> employees;
     private String companyName;
 
