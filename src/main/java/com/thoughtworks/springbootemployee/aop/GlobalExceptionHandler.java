@@ -12,8 +12,14 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(value = NotExistException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String errorHandler(RuntimeException exception) {
+    public String NotExistExceptionHandler(RuntimeException exception) {
         return exception.getMessage();
     }
 
+    @ResponseBody
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String IllegalArgumentExceptionHandler(RuntimeException exception) {
+        return exception.getMessage();
+    }
 }

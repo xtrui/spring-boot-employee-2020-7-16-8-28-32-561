@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.NotExistException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,8 @@ public class CompanyServiceTest {
     List<Company> mockedCompanies = new ArrayList<>();
     List<Employee> employees = new ArrayList<>();
     CompanyRepository mockedCompanyRepository = mock(CompanyRepository.class);
-    CompanyService companyService = new CompanyService(mockedCompanyRepository);
+    EmployeeRepository mockEmployeeRepository = mock(EmployeeRepository.class);
+    CompanyService companyService = new CompanyService(mockedCompanyRepository, mockEmployeeRepository);
 
     @BeforeEach
     void setUp() {
@@ -94,6 +96,15 @@ public class CompanyServiceTest {
         Company company = companyService.addCompany(mockedCompanies.get(0));
         //then
         assertEquals(mockedCompanies.get(0), company);
+    }
+
+    @Test
+    void should_throw_illegal_argument_exception_when_add_company_given_null() {
+        //given
+        //when
+        //then
+        RuntimeException exception = assertThrows(IllegalArgumentException.class, () -> companyService.addCompany(null));
+        assertEquals("you didn't give any company", exception.getMessage());
     }
 
     @Test

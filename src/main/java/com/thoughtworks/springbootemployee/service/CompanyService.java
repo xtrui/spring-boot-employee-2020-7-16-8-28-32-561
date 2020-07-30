@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.NotExistException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,12 @@ import java.util.List;
 @Service
 public class CompanyService {
     private CompanyRepository companyRepository;
+    private EmployeeRepository employeeRepository;
 
-    public CompanyService(CompanyRepository companyRepository) {
+
+    public CompanyService(CompanyRepository companyRepository, EmployeeRepository employeeRepository) {
         this.companyRepository = companyRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     public List<Company> getCompanies() {
@@ -37,11 +41,13 @@ public class CompanyService {
         if (company == null) {
             throw new NotExistException("this company doesn't exist");
         }
-//        List<Employee>
-        return null;
+        return employeeRepository.findByCompanyID(company.getId());
     }
 
     public Company addCompany(Company company) {
+        if (company == null) {
+            throw new IllegalArgumentException("you didn't give any company");
+        }
         return companyRepository.save(company);
     }
 
