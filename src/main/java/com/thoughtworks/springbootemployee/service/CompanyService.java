@@ -52,6 +52,9 @@ public class CompanyService {
     }
 
     public Company updateCompany(Company company) {
+        if (company == null) {
+            throw new IllegalArgumentException("you didn't give any company");
+        }
         Company existedCompany = companyRepository.findById(company.getId()).orElse(null);
         if (existedCompany == null) {
             return null;
