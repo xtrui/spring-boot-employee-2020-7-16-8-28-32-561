@@ -55,17 +55,13 @@ public class CompanyController {
         return companyService.addCompany(company);
     }
 
-    @PutMapping("companies/{id}")
+    @PutMapping("{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Company updateCompany(@PathVariable int id, @RequestBody Company company2) {
-//        Company company = companies.stream().filter(company1 -> company1.getId() == id).findAny().orElse(null);
-//        companies.remove(company);
-//        companies.add(company2);
-//        return companies.stream().filter(company1 -> company1.getId() == id).findAny().orElse(null);
         return companyService.updateCompany(company2);
     }
 
-    @DeleteMapping("companies/{id}")
+    @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompany(@PathVariable int id) {
 //        Company company = companies.stream().filter(company1 -> company1.getId() == id).findAny().orElse(null);

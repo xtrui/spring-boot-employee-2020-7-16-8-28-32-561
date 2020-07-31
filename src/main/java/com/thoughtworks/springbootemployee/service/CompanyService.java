@@ -69,11 +69,11 @@ public class CompanyService {
                 existedCompany.setEmployeesNums(company.getEmployeesNums());
             }
         }
-        return companyRepository.save(company);
+        return companyRepository.save(existedCompany);
     }
 
     public Page<Company> findByPage(int page, int pageSize) {
-        return companyRepository.findAll(PageRequest.of(page, pageSize));
+        return companyRepository.findAll(PageRequest.of(--page, pageSize));
     }
 
     public void deleteByID(int ID) {
