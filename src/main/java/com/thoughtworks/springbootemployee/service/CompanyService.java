@@ -26,8 +26,8 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public Company getCompany(int ID) {
-        Company company = companyRepository.findById(ID).orElse(null);
+    public Company getCompany(int id) {
+        Company company = companyRepository.findById(id).orElse(null);
         if (company == null) {
             throw new NotExistException("this company doesn't exist");
         }
@@ -35,13 +35,13 @@ public class CompanyService {
         return company;
     }
 
-    public List<Employee> getEmployees(int ID) {
+    public List<Employee> getEmployees(int id) {
 
-        Company company = companyRepository.findById(ID).orElse(null);
+        Company company = companyRepository.findById(id).orElse(null);
         if (company == null) {
             throw new NotExistException("this company doesn't exist");
         }
-        return employeeRepository.findByCompanyID(company.getId());
+        return employeeRepository.findByCompanyId(company.getId());
     }
 
     public Company addCompany(Company company) {
@@ -76,7 +76,7 @@ public class CompanyService {
         return companyRepository.findAll(PageRequest.of(--page, pageSize));
     }
 
-    public void deleteByID(int ID) {
-        companyRepository.deleteById(ID);
+    public void deleteById(int id) {
+        companyRepository.deleteById(id);
     }
 }

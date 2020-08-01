@@ -134,7 +134,7 @@ public class CompanyServiceTest {
         // given
 
         // when
-        companyService.deleteByID(1);
+        companyService.deleteById(1);
         // then
         verify(mockedCompanyRepository, times(1)).deleteById(1);
     }

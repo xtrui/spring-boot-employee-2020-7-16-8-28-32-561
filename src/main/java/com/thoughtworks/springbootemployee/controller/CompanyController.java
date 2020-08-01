@@ -65,7 +65,7 @@ public class CompanyController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompany(@PathVariable int id) {
 //        Company company = companies.stream().filter(company1 -> company1.getId() == id).findAny().orElse(null);
-        companyService.deleteByID(id);
+        companyService.deleteById(id);
 //        return companies.remove(company);
     }
 

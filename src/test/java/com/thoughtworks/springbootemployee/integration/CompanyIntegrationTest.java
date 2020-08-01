@@ -65,6 +65,8 @@ public class CompanyIntegrationTest {
         //then
     }
 
+    //todo get employees by companyId
+
     @Test
     void should_return_company_when_add_company_given_company() throws Exception {
         mockMvc.perform(post("/companies").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(company)))
@@ -75,20 +77,19 @@ public class CompanyIntegrationTest {
 
     @Test
     void should_return_company_when_update_company_given_company() throws Exception {
-        companyRepository.save(company);
-        employeeRepository.save(employees.get(0));
+        Company savedCompany = companyRepository.save(company);
         company.setCompanyName("tencent");
-        mockMvc.perform(put("/companies/{id}", 1).contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(company)))
+        mockMvc.perform(put("/companies/{id}", savedCompany.getId()).contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(company)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.companyName").value("tencent"));
     }
 
     @Test
-    void should_return__when_delete_by_id_given_id() throws Exception {
+    void should_return_status_204_when_delete_by_id_given_id() throws Exception {
         //given
-        companyRepository.save(company);
+        Company company1 = companyRepository.save(company);
         //when
-        mockMvc.perform(delete("/companies/{id}", 1))
+        mockMvc.perform(delete("/companies/{id}", company1.getId()))
                 .andExpect(status().isNoContent());
         //then
     }

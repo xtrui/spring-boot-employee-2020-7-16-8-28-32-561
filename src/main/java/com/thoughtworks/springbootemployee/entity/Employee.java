@@ -14,7 +14,7 @@ public class Employee {
     private int age;
     private String gender;
     private Double salary;
-    private int companyId;
+    private Integer companyId;
 
     public int getCompanyId() {
         return companyId;

@@ -14,6 +14,6 @@ create table employee
     age        int,
     gender     char,
     salary     double,
-    company_id int,
-    foreign key (company_id) references company (id)
+    companyId  int,
+    foreign key (companyId) references company (id)
 );
