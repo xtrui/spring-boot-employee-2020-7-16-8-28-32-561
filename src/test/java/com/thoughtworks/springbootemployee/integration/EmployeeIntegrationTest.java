@@ -66,6 +66,15 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$", hasSize(2)));
     }
 
+    @Test
+    void should_return_employee_when_get_employee_given_id() throws Exception {
+        // given
+        Employee saveEmployee = employeeRepository.save(employees.get(1));
+        // when
+        mockMvc.perform(get("/employees/" + saveEmployee.getId()))
+                .andExpect(jsonPath("$.id").value(saveEmployee.getId()));
+    }
+
     @AfterEach
     void tearDown() {
         employeeRepository.deleteAll();

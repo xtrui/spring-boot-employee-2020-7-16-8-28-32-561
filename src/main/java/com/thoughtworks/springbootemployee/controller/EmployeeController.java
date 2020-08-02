@@ -5,13 +5,11 @@ import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
-    public static List<Employee> employees = new ArrayList<>();
     EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
