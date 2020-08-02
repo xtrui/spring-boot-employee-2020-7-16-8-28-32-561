@@ -37,8 +37,8 @@ public class CompanyIntegrationTest {
     @BeforeEach
     void setUp() {
         companyRepository.deleteAll();
-        employees.add(new Employee("alibaba1", 20, "man", 6000.0, 1));
-        employees.add(new Employee("alibaba2", 19, "man", 8000.0, 1));
+        employees.add(new Employee("alibaba1", 20, "man", 6000.0, 0));
+        employees.add(new Employee("alibaba2", 19, "man", 8000.0, 0));
         company = new Company(0, 2, null, "alibaba");
     }
 
@@ -56,16 +56,25 @@ public class CompanyIntegrationTest {
     void should_return_companies_when_findByPage_given_page() throws Exception {
         //given
         companyRepository.save(company);
-//        company.setCompanyName("Tencent");
-//        company.setId(0);
-//        companyRepository.save(company);
         //when
         mockMvc.perform(get("/companies?page=1&pageSize=2"))
                 .andExpect(jsonPath("$[0].companyName").value("alibaba"));
         //then
     }
 
-    //todo get employees by companyId
+
+    @Test
+    void should_return_employees_when_get_employees_given_company_id() throws Exception {
+        // given
+        Company savedCompany = companyRepository.save(company);
+        employees.get(0).setCompanyId(company.getId());
+        employees.get(1).setCompanyId(company.getId());
+        // when
+        mockMvc.perform(get("/companies/" + savedCompany.getId() + "/employees"))
+                .andExpect(jsonPath("$", hasSize(2)));
+        // then
+
+    }
 
     @Test
     void should_return_company_when_add_company_given_company() throws Exception {
