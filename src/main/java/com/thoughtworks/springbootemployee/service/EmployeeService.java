@@ -28,8 +28,8 @@ public class EmployeeService {
         return employeeRepository.findByGender(gender);
     }
 
-    public Employee getEmployee(int ID) {
-        return employeeRepository.findById(ID).orElse(null);
+    public Employee getEmployee(int id) {
+        return employeeRepository.findById(id).orElse(null);
     }
 
     public Employee addEmployee(Employee employee) {
