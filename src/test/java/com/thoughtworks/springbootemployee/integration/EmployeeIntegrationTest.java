@@ -60,6 +60,12 @@ public class EmployeeIntegrationTest {
 
     }
 
+    @Test
+    void should_return_employees_when_get_employees_given_gender() throws Exception {
+        mockMvc.perform(get("/employees?gender=man"))
+                .andExpect(jsonPath("$", hasSize(2)));
+    }
+
     @AfterEach
     void tearDown() {
         employeeRepository.deleteAll();
