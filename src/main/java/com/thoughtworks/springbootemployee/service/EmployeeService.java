@@ -21,7 +21,7 @@ public class EmployeeService {
 
     public List<Employee> getEmployees(int page, int pageSize) {
 
-        return employeeRepository.findAll(PageRequest.of(page, pageSize)).toList();
+        return employeeRepository.findAll(PageRequest.of(--page, pageSize)).toList();
     }
 
     public List<Employee> getEmployees(String gender) {

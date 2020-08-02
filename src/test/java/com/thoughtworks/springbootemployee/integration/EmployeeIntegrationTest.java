@@ -39,16 +39,25 @@ public class EmployeeIntegrationTest {
         Employee employee2 = new Employee("alibaba2", 19, "man", 8000.0, saveCompany.getId());
         employees.add(employee1);
         employees.add(employee2);
-
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
     }
 
     @Test
     void should_return_employees_when_get_employees_given_nothing() throws Exception {
         // when
-        employeeRepository.save(employees.get(0));
-        employeeRepository.save(employees.get(1));
+
         mockMvc.perform(get("/employees"))
                 .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    void should_return_employees_when_get_employees_given_page_and_page_size() throws Exception {
+        // when
+        mockMvc.perform(get("/employees?page=1&pageSize=2"))
+                .andExpect(jsonPath("$", hasSize(2)));
+        // then
+
     }
 
     @AfterEach
