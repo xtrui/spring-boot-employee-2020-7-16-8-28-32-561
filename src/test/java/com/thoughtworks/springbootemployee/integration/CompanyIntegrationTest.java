@@ -36,7 +36,6 @@ public class CompanyIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        companyRepository.deleteAll();
         employees.add(new Employee("alibaba1", 20, "man", 6000.0, 0));
         employees.add(new Employee("alibaba2", 19, "man", 8000.0, 0));
         company = new Company(0, 2, null, "alibaba");
