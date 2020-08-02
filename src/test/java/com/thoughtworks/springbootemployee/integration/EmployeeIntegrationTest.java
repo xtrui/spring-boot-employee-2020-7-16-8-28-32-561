@@ -98,10 +98,15 @@ public class EmployeeIntegrationTest {
                 .content(new ObjectMapper().writeValueAsString(employee)))
                 .andExpect(status().is(HttpStatus.CREATED.value()))
                 .andExpect(jsonPath("$.name").value("updatedName"));
+    }
+
+    @Test
+    void should_return_status_204_when_delete_given_id() throws Exception {
+        // given
+        Employee employee = employeeRepository.save(employees.get(0));
         // when
-
-        // then
-
+        mockMvc.perform(delete("/employees/" + employee.getId()))
+                .andExpect(status().is(HttpStatus.NO_CONTENT.value()));
     }
 
     @AfterEach
