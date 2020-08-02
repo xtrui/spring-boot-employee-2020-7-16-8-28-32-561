@@ -62,6 +62,16 @@ public class CompanyIntegrationTest {
         //then
     }
 
+    @Test
+    void should_return_company_when_get_company_given_company_id() throws Exception {
+        // given
+        Company saveCompany = companyRepository.save(company);
+        // when
+        mockMvc.perform(get("/companies/" + saveCompany.getId()))
+                .andExpect(jsonPath("$.id").value(saveCompany.getId()));
+        // then
+
+    }
 
     @Test
     void should_return_employees_when_get_employees_given_company_id() throws Exception {

@@ -21,11 +21,6 @@ public class CompanyController {
 
     @GetMapping
     public List<Company> getCompanies(Integer page, Integer pageSize) {
-//        List<Employee> employees = new ArrayList<>();
-//        employees.add(new Employee(1, "alibaba1", 20, "male", 6000.0));
-//        employees.add(new Employee(2, "alibaba2", 19, "male", 8000.0));
-//        companies.add(new Company(1, 2, employees, "alibaba"));
-//        companies.add(new Company(2, 2, employees, "alibaba2"));
         if (page != null && pageSize != null) {
             return companyService.findByPage(page, pageSize).toList();
         }
@@ -34,18 +29,12 @@ public class CompanyController {
 
     @GetMapping("{id}")
     public Company getCompany(@PathVariable int id) {
-//        List<Employee> employees = new ArrayList<>();
-//        employees.add(new Employee(1, "alibaba1", 20, "male", 6000.0));
-//        employees.add(new Employee(2, "alibaba2", 19, "male", 8000.0));
+
         return companyService.getCompany(id);
     }
 
     @GetMapping("{id}/employees")
     public List<Employee> getEmployeesOfCompany(@PathVariable int id) {
-//        List<Employee> employees = new ArrayList<>();
-//        employees.add(new Employee(1, "alibaba1", 20, "male", 6000.0));
-//        employees.add(new Employee(2, "alibaba2", 19, "male", 8000.0));
-//        Company company = new Company(1, 2, employees, "alibaba");
         return companyService.getEmployees(id);
     }
 
@@ -64,7 +53,6 @@ public class CompanyController {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCompany(@PathVariable int id) {
-//        Company company = companies.stream().filter(company1 -> company1.getId() == id).findAny().orElse(null);
         companyService.deleteById(id);
 //        return companies.remove(company);
     }
