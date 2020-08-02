@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,9 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -83,7 +84,23 @@ public class EmployeeIntegrationTest {
         // when
         mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(employees.get(0))))
+                .andExpect(status().is(HttpStatus.CREATED.value()))
                 .andExpect(jsonPath("$.id").value(employees.get(0).getId()));
+
+    }
+
+    @Test
+    void should_return_employee_when_update_employee_given_employee() throws Exception {
+        // given
+        Employee employee = employeeRepository.save(employees.get(0));
+        employee.setName("updatedName");
+        mockMvc.perform(put("/employees/" + employee.getId()).contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(employee)))
+                .andExpect(status().is(HttpStatus.CREATED.value()))
+                .andExpect(jsonPath("$.name").value("updatedName"));
+        // when
+
+        // then
 
     }
 
