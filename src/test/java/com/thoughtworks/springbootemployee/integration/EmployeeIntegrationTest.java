@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.integration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.springbootemployee.entity.Company;
 import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
@@ -73,6 +76,15 @@ public class EmployeeIntegrationTest {
         // when
         mockMvc.perform(get("/employees/" + saveEmployee.getId()))
                 .andExpect(jsonPath("$.id").value(saveEmployee.getId()));
+    }
+
+    @Test
+    void should_return_employee_when_add_employee_given_employee() throws Exception {
+        // when
+        mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(employees.get(0))))
+                .andExpect(jsonPath("$.id").value(employees.get(0).getId()));
+
     }
 
     @AfterEach
