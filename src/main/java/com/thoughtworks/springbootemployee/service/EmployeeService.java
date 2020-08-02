@@ -25,6 +25,9 @@ public class EmployeeService {
     }
 
     public List<Employee> getEmployees(String gender) {
+        if (gender == null) {
+            throw new IllegalArgumentException("you didn't give the gender");
+        }
         return employeeRepository.findByGender(gender);
     }
 
@@ -33,11 +36,17 @@ public class EmployeeService {
     }
 
     public Employee addEmployee(Employee employee) {
+        if (employee == null) {
+            throw new IllegalArgumentException("you didn't give the employee");
+        }
         return employeeRepository.save(employee);
     }
 
     public Employee update(Employee employee) {
         Employee existEmployee = employeeRepository.findById(employee.getId()).orElse(null);
+        if (employee == null) {
+            throw new IllegalArgumentException("you didn't give the employee");
+        }
         if (existEmployee == null) {
             return null;
         } else {

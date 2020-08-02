@@ -57,7 +57,7 @@ public class CompanyService {
         }
         Company existedCompany = companyRepository.findById(company.getId()).orElse(null);
         if (existedCompany == null) {
-            return null;
+            throw new NotExistException("this company doesn't exist");
         } else {
             if (company.getCompanyName() != null) {
                 existedCompany.setCompanyName(company.getCompanyName());

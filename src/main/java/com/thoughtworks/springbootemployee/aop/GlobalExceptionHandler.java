@@ -2,24 +2,21 @@ package com.thoughtworks.springbootemployee.aop;
 
 import com.thoughtworks.springbootemployee.exception.NotExistException;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ResponseBody
     @ExceptionHandler(value = NotExistException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String NotExistExceptionHandler(RuntimeException exception) {
+    public String notExistExceptionHandler(RuntimeException exception) {
         return exception.getMessage();
     }
 
-    @ResponseBody
     @ExceptionHandler(value = IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String IllegalArgumentExceptionHandler(RuntimeException exception) {
+    public String illegalArgumentExceptionHandler(RuntimeException exception) {
         return exception.getMessage();
     }
 }
