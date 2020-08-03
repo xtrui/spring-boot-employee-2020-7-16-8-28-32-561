@@ -5,7 +5,6 @@ import com.thoughtworks.springbootemployee.entity.Employee;
 import com.thoughtworks.springbootemployee.exception.NotExistException;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -72,8 +71,8 @@ public class CompanyService {
         return companyRepository.save(existedCompany);
     }
 
-    public Page<Company> findByPage(int page, int pageSize) {
-        return companyRepository.findAll(PageRequest.of(--page, pageSize));
+    public List<Company> findByPage(int page, int pageSize) {
+        return companyRepository.findAll(PageRequest.of(--page, pageSize)).toList();
     }
 
     public void deleteById(int id) {

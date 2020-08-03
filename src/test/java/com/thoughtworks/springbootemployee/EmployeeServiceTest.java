@@ -6,7 +6,7 @@ import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +46,11 @@ public class EmployeeServiceTest {
     void should_employees_of_page_when_get_employees_given_page() {
         // given
         PageImpl<Employee> employeePage = new PageImpl<>(this.employees);
-        given(mockEmployeeRepository.findAll(PageRequest.of(1, 2))).willReturn(employeePage);
+        given(mockEmployeeRepository.findAll(any(Pageable.class))).willReturn(employeePage);
         // when
         List<Employee> employees = employeeService.getEmployees(1, 2);
         // then
-        assertEquals(this.employees, employees);
+        assertEquals(2, employees.size());
     }
 
     @Test

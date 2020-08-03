@@ -43,10 +43,10 @@ public class EmployeeService {
     }
 
     public Employee update(Employee employee) {
-        Employee existEmployee = employeeRepository.findById(employee.getId()).orElse(null);
         if (employee == null) {
             throw new IllegalArgumentException("you didn't give the employee");
         }
+        Employee existEmployee = employeeRepository.findById(employee.getId()).orElse(null);
         if (existEmployee == null) {
             return null;
         } else {

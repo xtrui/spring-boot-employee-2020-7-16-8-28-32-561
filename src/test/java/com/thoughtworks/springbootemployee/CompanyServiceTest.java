@@ -8,9 +8,8 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,11 +51,11 @@ public class CompanyServiceTest {
     void should_return_companies_of_page_when_find_by_page_given_page_and_page_size() {
         // given
         PageImpl<Company> companyPage = new PageImpl<>(mockedCompanies);
-        given(mockedCompanyRepository.findAll(PageRequest.of(1, 2))).willReturn(companyPage);
+        given(mockedCompanyRepository.findAll(any(Pageable.class))).willReturn(companyPage);
         // when
-        Page<Company> page = companyService.findByPage(1, 2);
+        List<Company> companies = companyService.findByPage(1, 2);
         // then
-        assertEquals(1, page.getSize());
+        assertEquals(mockedCompanies.size(), companies.size());
     }
 
     @Test
@@ -83,10 +82,11 @@ public class CompanyServiceTest {
     void should_return_employees_when_get_employees_given_company_id() {
         //given
         given(mockedCompanyRepository.findById(any())).willReturn(Optional.of(mockedCompanies.get(0)));
+        given(mockEmployeeRepository.findByCompanyId(any())).willReturn(employees);
         //when
         List<Employee> employees = companyService.getEmployees(1);
         //then
-        assertEquals(mockedCompanies.get(0).getEmployees(), employees);
+        assertEquals(this.employees, employees);
     }
 
     @Test
