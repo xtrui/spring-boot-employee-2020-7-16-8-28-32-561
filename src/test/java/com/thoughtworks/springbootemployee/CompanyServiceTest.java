@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -124,9 +125,10 @@ public class CompanyServiceTest {
         //given
         given(mockedCompanyRepository.findById(any())).willReturn(Optional.empty());
         //when
-        Company company = companyService.updateCompany(mockedCompanies.get(0));
         //then
-        assertNull(company);
+        NotExistException notExistException = assertThrows(NotExistException.class, () -> companyService.updateCompany(mockedCompanies.get(0)));
+
+        assertEquals("this company doesn't exist", notExistException.getMessage());
     }
 
     @Test

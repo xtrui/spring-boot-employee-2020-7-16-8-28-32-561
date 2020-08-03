@@ -78,6 +78,8 @@ public class CompanyIntegrationTest {
         Company savedCompany = companyRepository.save(company);
         employees.get(0).setCompanyId(company.getId());
         employees.get(1).setCompanyId(company.getId());
+        employeeRepository.save(employees.get(0));
+        employeeRepository.save(employees.get(1));
         // when
         mockMvc.perform(get("/companies/" + savedCompany.getId() + "/employees"))
                 .andExpect(jsonPath("$", hasSize(2)));
@@ -97,7 +99,7 @@ public class CompanyIntegrationTest {
     void should_return_company_when_update_company_given_company() throws Exception {
         Company savedCompany = companyRepository.save(company);
         company.setCompanyName("tencent");
-        mockMvc.perform(put("/companies/{id}", savedCompany.getId()).contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(company)))
+        mockMvc.perform(put("/companies/", savedCompany.getId()).contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(company)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.companyName").value("tencent"));
     }
@@ -107,7 +109,7 @@ public class CompanyIntegrationTest {
         //given
         Company company1 = companyRepository.save(company);
         //when
-        mockMvc.perform(delete("/companies/{id}", company1.getId()))
+        mockMvc.perform(delete("/companies/", company1.getId()))
                 .andExpect(status().isNoContent());
         //then
     }
